@@ -98,7 +98,12 @@ END; $$
 
 -- ----------------------------------------------------------------
 -- 4 Armazenamento dos resultados
---escreva a sua solução aqui
+CREATE TABLE(
+id SERIAL PRIMARY KEY,
+nome_pais VARCHAR(200),
+preco_medio VARCHAR(200),
+descricao_mais_longa VARCHAR(2000)
+);
 
 
 -- ----------------------------------------------------------------
