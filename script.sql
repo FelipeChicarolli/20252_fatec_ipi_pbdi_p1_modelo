@@ -52,13 +52,12 @@ END $$;
 
 -- ----------------------------------------------------------------
 -- 4 Armazenamento dos resultados
-CREATE TABLE(
-id SERIAL PRIMARY KEY,
-nome_pais VARCHAR(200),
-preco_medio VARCHAR(200),
-descricao_mais_longa VARCHAR(2000)
+CREATE TABLE analise_vinhos (
+    cod_analise SERIAL PRIMARY KEY,
+    nome_pais VARCHAR(100),
+    preco_medio NUMERIC(10, 2),
+    descricao_mais_longa TEXT
 );
-
 
 -- ----------------------------------------------------------------
 -- 5 Exportação dos dados
