@@ -10,40 +10,22 @@ price FLOAT
 
 -- ----------------------------------------------------------------
 -- 2 Cursor não vinculado (cálculo de preço médio)
+-- Processamento com Cursor NÃO Vinculado
 DO $$
 DECLARE
-    v_pais TEXT;
-    cur_precos REFCURSOR;
-    v_preco NUMERIC(10, 2);
-    v_soma_precos NUMERIC(10, 2);
-    v_contador INT;
-    v_media NUMERIC(10, 2);
+    cur_paises REFCURSOR; 
+    v_pais VARCHAR(100);
+    v_preco_medio NUMERIC(10, 2);
 BEGIN
-    OPEN cur_paises;
+    OPEN cur_paises FOR SELECT DISTINCT country FROM vinhos;
     LOOP
-        FETCH cur_paises INTO v_pais;
-        EXIT WHEN NOT FOUND;
-        v_soma_precos := 0;
-        v_contador := 0;
-        OPEN cur_precos FOR EXECUTE
-            format(
-                '
-                SELECT price FROM tb_vinhos WHERE country = %L AND price IS NOT NULL
-                ', v_pais);
-        LOOP
-            FETCH cur_precos INTO v_preco;
-            EXIT WHEN NOT FOUND;
-            v_soma_precos := v_soma_precos + v_preco;
-            v_contador := v_contador + 1;
-        END LOOP;
-        CLOSE cur_precos;
-        IF v_contador > 0 THEN
-            v_media := v_soma_precos / v_contador;
-            INSERT INTO tb_resultados_paises (nome_pais, preco_medio) VALUES (v_pais, v_media);
-        END IF;
+        FETCH cur_paises INTO v_pais; 
+        EXIT WHEN NOT FOUND; 
+        SELECT AVG(price) INTO v_preco_medio FROM vinhos WHERE country = v_pais;
+        INSERT INTO analise_vinhos (nome_pais, preco_medio) VALUES (v_pais, v_preco_medio);
     END LOOP;
     CLOSE cur_paises;
-END; $$
+END $$;
 
 
 -- ----------------------------------------------------------------
