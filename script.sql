@@ -89,6 +89,6 @@ CREATE TABLE analise_vinhos (
 
 -- ----------------------------------------------------------------
 -- 5 Exportação dos dados
---escreva a sua solução aqui
+-- Exportado csv, colocado no repositório
 -- 
 -- ----------------------------------------------------------------
